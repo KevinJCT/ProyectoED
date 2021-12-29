@@ -2,6 +2,7 @@ package Proyecto;
 
 import static Proyecto.Menu.ingresarPos;
 import interfaz.consola.Consola;
+import java.io.File;
 import java.util.LinkedList;
 import validacion.ValidadorExpReg;
 
@@ -9,7 +10,7 @@ public class GestorProyecto {
 
     LinkedList<Jugador> jugadores;
     LinkedList<Tecla> teclas;
-    LinkedList<Tiempo> tiempos;
+    LinkedList<Integer> tiempos;
 
     GestorProyecto() {
         this.jugadores = new LinkedList();
@@ -25,7 +26,7 @@ public class GestorProyecto {
                 new ValidadorExpReg(ValidadorExpReg.CADENA_TEXTO)));
 
         //Guarda una instancia de objeto en la lista dinamica
-        if (!this.jugadores.add(new Jugador(nickname))) { 
+        if (!this.jugadores.add(new Jugador(nickname))) {
             System.out.println(Mensajes.ERROR.MEMORIA_INSUFICIENTE.tx()); // Se aplica si se tiene un limite
         } else {
             System.out.println(Mensajes.NOTIF.JUGADOR.tx()); // Se guarda exitosamente
@@ -156,68 +157,82 @@ public class GestorProyecto {
     }
 
     public void insertarTiempo() {
-
         String tiempo = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
                 new ValidadorExpReg(ValidadorExpReg.ENTERO_CON_SIGNO)));
 
-        if (!this.tiempos.add(new Tiempo(tiempo))) {
-            System.out.println(Mensajes.ERROR.MEMORIA_INSUFICIENTE.tx());
+        for (Jugador jugador : jugadores) {
+            jugador.tiempo = Integer.valueOf(tiempo);
+        }
+    }
+
+    public void insertarArchivo(int op) {
+        File archivo;
+        if (op == 1) {
+            for (Jugador jugador : jugadores) {
+                jugador.letras = new File("Facil.txt");
+            }
+        } else if (op == 2) {
+            for (Jugador jugador : jugadores) {
+                jugador.letras = new File("Normal.txt");
+            }
         } else {
-            System.out.println(Mensajes.NOTIF.TIEMPO.tx());
-        }
-
-    }
-
-    public boolean modificarTiempo() {
-        if (this.tiempos.isEmpty()) {
-            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-            return false;
-        }
-        imprimirTiempo(); // Aqui tambien
-        int pos;
-        do {
-            pos = ingresarPos();
-            if (pos > this.tiempos.size() || pos <= 0) {
-                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
+            for (Jugador jugador : jugadores) {
+                jugador.letras = new File("Dificil.txt");
             }
-        } while (pos > this.tiempos.size() || pos <= 0);
-        String tiempo = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
-                Mensajes.ERROR.NO_EXISTE_TIEMPO.tx(),
-                new ValidadorExpReg(ValidadorExpReg.ENTERO_SIN_SIGNO)));
+        }
 
-        this.tiempos.get(pos - 1).tiempo = tiempo;
-        System.out.println(Mensajes.NOTIF.MODIFICAR_TIEMPO.tx());
-        return true;
     }
 
-    public boolean eliminarTiempo() {
-        if (this.tiempos.isEmpty()) {
-            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-            return false;
-        }
-        imprimirTiempo();
-        int pos;
-        do {
-            pos = ingresarPos();
-            if (pos > this.tiempos.size() || pos <= 0) {
-                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-            }
-        } while (pos > this.tiempos.size() || pos <= 0);
-        this.tiempos.remove(pos - 1);
-        System.out.println(Mensajes.NOTIF.ELIMINAR_TIEMPO.tx());
-        return true;
-    }
-
-    public boolean imprimirTiempo() {
-        if (this.tiempos.isEmpty()) {
-            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-            return false;
-        }
-        for (int i = 0; i < this.tiempos.size(); i++) {
-            System.out.printf("%10d%s%s\n", i + 1, ".", this.tiempos.get(i).tiempo);
-        }
-        return true;
-    }
-    
+//
+//    public boolean modificarTiempo() {
+//        if (this.tiempos.isEmpty()) {
+//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
+//            return false;
+//        }
+//        imprimirTiempo(); // Aqui tambien
+//        int pos;
+//        do {
+//            pos = ingresarPos();
+//            if (pos > this.tiempos.size() || pos <= 0) {
+//                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
+//            }
+//        } while (pos > this.tiempos.size() || pos <= 0);
+//        String tiempo = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
+//                Mensajes.ERROR.NO_EXISTE_TIEMPO.tx(),
+//                new ValidadorExpReg(ValidadorExpReg.ENTERO_SIN_SIGNO)));
+//
+//        this.tiempos.get(pos - 1).tiempo = tiempo;
+//        System.out.println(Mensajes.NOTIF.MODIFICAR_TIEMPO.tx());
+//        return true;
+//    }
+//
+//    public boolean eliminarTiempo() {
+//        if (this.tiempos.isEmpty()) {
+//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
+//            return false;
+//        }
+//        imprimirTiempo();
+//        int pos;
+//        do {
+//            pos = ingresarPos();
+//            if (pos > this.tiempos.size() || pos <= 0) {
+//                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
+//            }
+//        } while (pos > this.tiempos.size() || pos <= 0);
+//        this.tiempos.remove(pos - 1);
+//        System.out.println(Mensajes.NOTIF.ELIMINAR_TIEMPO.tx());
+//        return true;
+//    }
+//
+//    public boolean imprimirTiempo() {
+//        if (this.tiempos.isEmpty()) {
+//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
+//            return false;
+//        }
+//        for (int i = 0; i < this.tiempos.size(); i++) {
+//            System.out.printf("%10d%s%s\n", i + 1, ".", this.tiempos.get(i).tiempo);
+//        }
+//        return true;
+//    }
 }

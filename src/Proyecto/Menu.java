@@ -9,9 +9,9 @@ public class Menu {
     private static final String EXPR_REG_MENU_PCPAL = "[0-5]";
     private static final String EXPR_REG_MENU_REGISTROS_JUGADORES = "[0-3]";
     private static final String EXPR_REG_MENU_REGISTRO_TECLAS = "[0-3]";
-     private static final String EXPR_REG_MENU_CONFIGURACION = "[0-2]";
-       private static final String EXPR_REG_MENU_CONFIGURACION_MODOJUEGO= "[0-3]";
-     private static final String EXPR_REG_MENU_CONFIGURACION_TIEMPO= "[0-3]";  
+    private static final String EXPR_REG_MENU_CONFIGURACION = "[0-2]";
+    private static final String EXPR_REG_MENU_CONFIGURACION_MODOJUEGO = "[0-3]";
+    private static final String EXPR_REG_MENU_CONFIGURACION_TIEMPO = "[0-3]";
 
 //    private static final String EXPR_REG_NOTA = "^[0-9]+(\\.[0-9]{1,2})?$";
     private static final String EXPR_REG_CONFIRM = "[ssnN]";
@@ -36,8 +36,7 @@ public class Menu {
                     break;
                 case 3:
                     configuracionJuego(gestorProyecto);
-                   
-                    
+
                     break;
                 case 4:
                     // Play
@@ -48,8 +47,6 @@ public class Menu {
         } while (opcion != 0);
 
     }
-
-   
 
     public static void play() {
 
@@ -106,6 +103,7 @@ public class Menu {
             }
         } while (opcion != 0);
     }
+
     public static void configuracionJuego(GestorProyecto gestorProyecto) {
         int opcion;
         do {
@@ -117,7 +115,7 @@ public class Menu {
             switch (opcion) {
                 case 1:
                     // Modo de guejo
-                   modoJuego(gestorProyecto);
+                    modoJuego(gestorProyecto);
                     break;
                 case 2:
                     // Configuración tiempo 
@@ -126,56 +124,27 @@ public class Menu {
             }
         } while (opcion != 0);
     }
-    
-    
+
     public static void modoJuego(GestorProyecto gestorProyecto) {
-          int opcion;
+        int opcion;
         do {
             Menu.imprimirMenuConfiguraciónModalidad();
             opcion = Integer.parseInt(Consola.ingresarDato(
                     Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
                     new ValidadorExpReg(EXPR_REG_MENU_CONFIGURACION_MODOJUEGO)));
 
-            switch (opcion) {
-                case 1:
-                    //Facil                 
-                    break;
-                case 2:
-                    //Normal
-                    break;
-                case 3:
-                    //Dificil
-                    break;
-            }
+             gestorProyecto.insertarArchivo(opcion);
+            
+          
         } while (opcion != 0);
     }
-     public static void configuracionTiempo(GestorProyecto gestorProyecto) {
-          int opcion;
-        do {
-            Menu.imprimirMenuConfiguraciónTiempo();
-            opcion = Integer.parseInt(Consola.ingresarDato(
-                    Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
-                    new ValidadorExpReg(EXPR_REG_MENU_CONFIGURACION_TIEMPO)));
 
-            switch (opcion) {
-                case 1:
-                    //Ingreso
-                    gestorProyecto.insertarTiempo();
-                    break;
-                case 2:
-                // Modificar
-                    gestorProyecto.modificarTiempo();
-                    break;
-                case 3:
-               // Eliminar
-                    gestorProyecto.eliminarTiempo();
-                    break;
-               
-            }
-        } while (opcion != 0);
+    public static void configuracionTiempo(GestorProyecto gestorProyecto) {
+        int opcion;
+        gestorProyecto.insertarTiempo();
     }
-    
-     private static void imprimirMenuPcpal() {
+
+    private static void imprimirMenuPcpal() {
         System.out.println(Mensajes.MENU.ENCABEZADO_MENU_PRINCIPAL.tx());
         System.out.println(Mensajes.MENU.REGISTRAR_JUGADORES.tx());
         System.out.println(Mensajes.MENU.REGISTRAR_TECLAS.tx());
@@ -213,7 +182,7 @@ public class Menu {
     private static void imprimirMenuConfiguraciónTiempo() {
         System.out.println(Mensajes.MENU.ENCABEZADO_REGISTRO_CONFIGURACIÓN_TIEMPO.tx());
         System.out.println(Mensajes.MENU.INGRESAR_TIEMPO.tx());
-       // System.out.println(Mensajes.MENU.IMPRIMIR_TIEMPO.tx());
+        // System.out.println(Mensajes.MENU.IMPRIMIR_TIEMPO.tx());
         System.out.println(Mensajes.MENU.MODIFICAR_TIEMPO.tx());
         System.out.println(Mensajes.MENU.ELIMINAR_TIEMPO.tx());
         System.out.println(Mensajes.MENU.REGRESAR.tx());

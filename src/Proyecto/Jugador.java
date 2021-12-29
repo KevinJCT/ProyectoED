@@ -1,11 +1,13 @@
 
 package Proyecto;
 
+import java.io.File;
+
 public class Jugador {
 
     String nickname;
     int tiempo;
-    String letras;
+    File letras;
     int cantidadAciertos;
     int cantidadFallos;
     
@@ -15,4 +17,5 @@ public class Jugador {
         this.nickname = nickname;
     }
 
+    
 }
