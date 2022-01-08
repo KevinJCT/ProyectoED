@@ -7,7 +7,7 @@ public class Jugador {
 
     String nickname;
     int tiempo;
-    File letras;
+//    File letras;
     int cantidadAciertos;
     int cantidadFallos;
     

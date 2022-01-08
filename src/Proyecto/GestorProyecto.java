@@ -2,8 +2,13 @@ package Proyecto;
 
 import static Proyecto.Menu.ingresarPos;
 import interfaz.consola.Consola;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Scanner;
 import validacion.ValidadorExpReg;
 
 public class GestorProyecto {
@@ -18,7 +23,7 @@ public class GestorProyecto {
         this.tiempos = new LinkedList();
     }
 
-    public void insertarJugador() {
+    public void insertarJugador() throws IOException {
 
         // Para validar el dato ingresado, utiliza el Consola.ingresarDato(1° mesaje es "Nombre jugador", 2° Mensaje de error", 3 solo permite letas° )
         String nickname = (Consola.ingresarDato(Mensajes.INGRESO.NOMBRE_JUGADOR.tx(), // ARGUMENTO
@@ -96,7 +101,7 @@ public class GestorProyecto {
 
         String tecla = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TECLA.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
-                new ValidadorExpReg(ValidadorExpReg.SOLO_LETRAS)));
+                new ValidadorExpReg(ValidadorExpReg.CADENA_TEXTO)));
 
         if (!this.teclas.add(new Tecla(tecla))) {
             System.out.println(Mensajes.ERROR.MEMORIA_INSUFICIENTE.tx());
@@ -149,7 +154,7 @@ public class GestorProyecto {
         } while (pos > this.teclas.size() || pos <= 0);
         String tecla = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TECLA.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
-                new ValidadorExpReg(ValidadorExpReg.SOLO_LETRAS)));
+                new ValidadorExpReg(ValidadorExpReg.CADENA_TEXTO)));
 
         this.teclas.get(pos - 1).tecla = tecla;
         System.out.println(Mensajes.NOTIF.MODIFICAR_TECLA.tx());
@@ -166,24 +171,76 @@ public class GestorProyecto {
         }
     }
 
-    public void insertarArchivo(int op) {
-        File archivo;
-        if (op == 1) {
-            for (Jugador jugador : jugadores) {
-                jugador.letras = new File("Facil.txt");
-            }
-        } else if (op == 2) {
-            for (Jugador jugador : jugadores) {
-                jugador.letras = new File("Normal.txt");
-            }
-        } else {
-            for (Jugador jugador : jugadores) {
-                jugador.letras = new File("Dificil.txt");
-            }
-        }
+    public void juego() {
+        int i = 0;
+        Scanner ingreso = new Scanner(System.in);
+        String linea;
+       while(i < jugadores.size()){
+           System.out.println(jugadores.get(i).nickname);
+           System.out.println(teclas.get(i).tecla);
+           linea = ingreso.nextLine();
+          
+           verificarIngreso(teclas.get(i).tecla, linea);
 
+           
+           i++;
+       }
     }
 
+     private void verificarIngreso(String tecla, String linea) {
+         // Contar cada letra que se equivo
+         
+         // Como compara caracter por caracter
+         
+         
+         
+         
+    }
+    
+//    public void insertarArchivo(int op) {
+//        File archivo;
+//        if (op == 1) {
+//            for (Jugador jugador : jugadores) {
+//                try {
+//                    jugador.letras = new File("Facil.txt");
+//                } catch (Exception e) {
+//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
+//                }
+//            }
+//        } else if (op == 2) {
+//            for (Jugador jugador : jugadores) {
+//                try {
+//                    jugador.letras = new File("Normal.txt");
+//                } catch (Exception e) {
+//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
+//                }
+//            }
+//        } else if (op == 3) {
+//            for (Jugador jugador : jugadores) {
+//                try {
+//                    jugador.letras = new File("Dificil.txt");
+//                } catch (Exception e) {
+//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
+//                }
+//            }
+//        }
+//    }
+//    public void jugar() throws FileNotFoundException, IOException {
+//
+//        for (Jugador jugador : jugadores) {
+//            
+//            System.out.println("Jugador "+jugador.nickname+jugador.tiempo);
+//            FileReader filereader = new FileReader(jugador.letras);
+//            BufferedReader br = new BufferedReader(filereader);
+//            String cadena;
+//
+//            while ((cadena = br.readLine()) != null) {
+//                System.out.println(cadena);
+//            }
+//
+//            System.out.println("");
+//        }
+//    }
 //
 //    public boolean modificarTiempo() {
 //        if (this.tiempos.isEmpty()) {
@@ -235,4 +292,6 @@ public class GestorProyecto {
 //        }
 //        return true;
 //    }
+
+   
 }

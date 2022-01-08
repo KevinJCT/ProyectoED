@@ -34,8 +34,8 @@ public class Mensajes {
         NO_EXISTE_TECLA("No existe palabras"),
         NO_VALIDO_TECLA("Tecla no valido."),
         NO_EXISTE_TIEMPO("No existe tiempo"),
-        NO_TERMINADO_JUEGO("El juego no está terminado");
-        
+        NO_TERMINADO_JUEGO("El juego no está terminado"),
+        ARCHIVO_NO_ENCONTRADO("Archivo no encontrado");
         
         private String valor;
 

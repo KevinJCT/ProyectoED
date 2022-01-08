@@ -2,6 +2,7 @@ package Proyecto;
 
 import static Proyecto.Menu.registrarJugadores;
 import interfaz.consola.Consola;
+import java.io.IOException;
 import validacion.ValidadorExpReg;
 
 public class Menu {
@@ -18,7 +19,7 @@ public class Menu {
 
     private static final String VALOR_CONFIRMACIÓN = "S";
 
-    static void menuPrincipal(GestorProyecto gestorProyecto) {
+    static void menuPrincipal(GestorProyecto gestorProyecto) throws IOException {
         int opcion;
         do {
             Menu.imprimirMenuPcpal();
@@ -40,7 +41,8 @@ public class Menu {
                     break;
                 case 4:
                     // Play
-                    System.out.println(Mensajes.ERROR.NO_TERMINADO_JUEGO.tx());
+                    gestorProyecto.juego();
+//                    System.out.println(Mensajes.ERROR.NO_TERMINADO_JUEGO.tx());
                     break;
             }
 
@@ -52,7 +54,7 @@ public class Menu {
 
     }
 
-    public static void registrarJugadores(GestorProyecto gestorProyecto) {
+    public static void registrarJugadores(GestorProyecto gestorProyecto) throws IOException {
         int opcion;
         do {
             Menu.imprimirMenuRegistroJugadores();
@@ -133,9 +135,8 @@ public class Menu {
                     Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
                     new ValidadorExpReg(EXPR_REG_MENU_CONFIGURACION_MODOJUEGO)));
 
-             gestorProyecto.insertarArchivo(opcion);
-            
-          
+//            gestorProyecto.insertarArchivo(opcion);
+
         } while (opcion != 0);
     }
 
