@@ -58,19 +58,26 @@ public class GestorProyecto {
             return false;
         }
         imprimirJugadores();
+
+        int pos = validarPosicion(jugadores.size());
+
+        // Realiza el control
+        this.jugadores.remove(pos - 1); // Remueve la posición anterior ingresada, ya que un lista empieza posicion 0
+        System.out.println(Mensajes.NOTIF.ELIMINAR_JUGADOR.tx());
+        return true;
+    }
+
+    int validarPosicion(int posFinal) {
         int pos;
         do {
             // Se obtiene el valor de posicion ingresada
             pos = ingresarPos();
             // posicion es mayor a la cantidad de jugadores o posicion es menor o igual a cero
-            if (pos > this.jugadores.size() || pos <= 0) {
+            if (pos > posFinal || pos <= 0) {
                 System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx()); // muestra el mensaje
             }
-        } while (pos > this.jugadores.size() || pos <= 0); // Realiza el control
-        this.jugadores.remove(pos - 1); // Remueve la posición anterior ingresada, ya que un lista empieza posicion 0
-        System.out.println(Mensajes.NOTIF.ELIMINAR_JUGADOR.tx());
-        return true;
-
+        } while (pos > posFinal || pos <= 0);
+        return pos;
     }
 
     public boolean modificarJugador() {
@@ -80,13 +87,9 @@ public class GestorProyecto {
             return false;
         }
         imprimirJugadores();
-        int pos;
-        do {
-            pos = ingresarPos();
-            if (pos > this.jugadores.size() || pos <= 0) {
-                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-            }
-        } while (pos > this.jugadores.size() || pos <= 0);
+
+        int pos = validarPosicion(jugadores.size());
+
         // Se ingresa el nickname
         String nickname = (Consola.ingresarDato(Mensajes.INGRESO.NOMBRE_JUGADOR.tx(),
                 Mensajes.ERROR.NO_VALIDO_JUGADOR.tx(),
@@ -127,13 +130,9 @@ public class GestorProyecto {
             return false;
         }
         imprimirTeclas();
-        int pos;
-        do {
-            pos = ingresarPos();
-            if (pos > this.teclas.size() || pos <= 0) {
-                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-            }
-        } while (pos > this.teclas.size() || pos <= 0);
+
+        int pos = validarPosicion(teclas.size());
+
         this.teclas.remove(pos - 1);
         System.out.println(Mensajes.NOTIF.ELIMINAR_TECLA.tx());
         return true;
@@ -145,13 +144,9 @@ public class GestorProyecto {
             return false;
         }
         imprimirTeclas();
-        int pos;
-        do {
-            pos = ingresarPos();
-            if (pos > this.teclas.size() || pos <= 0) {
-                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-            }
-        } while (pos > this.teclas.size() || pos <= 0);
+
+        int pos = validarPosicion(teclas.size());
+
         String tecla = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TECLA.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
                 new ValidadorExpReg(ValidadorExpReg.CADENA_TEXTO)));
@@ -175,28 +170,39 @@ public class GestorProyecto {
         int i = 0;
         Scanner ingreso = new Scanner(System.in);
         String linea;
-       while(i < jugadores.size()){
-           System.out.println(jugadores.get(i).nickname);
-           System.out.println(teclas.get(i).tecla);
-           linea = ingreso.nextLine();
-          
-           verificarIngreso(teclas.get(i).tecla, linea);
+        while (i < jugadores.size()) {
 
-           
-           i++;
-       }
+            System.out.println("------ " + jugadores.get(i).nickname + " ------");
+            System.out.println(teclas.get(i).tecla);
+            linea = ingreso.nextLine();
+            //Metodo para verificar y contar errores 
+            verificarIngreso(jugadores.get(i), teclas.get(i).tecla, linea);
+            i++;
+        }
+
+        for (Jugador jugador : jugadores) {
+            System.out.println("\n\n ****** Tabla ******");
+            System.out.printf("%10s%20s\n", "Jugador", "Cantidad Fallos");
+            System.out.printf("%10s%10s%10s\n", jugador.nickname, "........", jugador.cantidadFallos);
+        }
+        //Preguntar volver a jugar
     }
 
-     private void verificarIngreso(String tecla, String linea) {
-         // Contar cada letra que se equivo
-         
-         // Como compara caracter por caracter
-         
-         
-         
-         
+    private void verificarIngreso(Jugador jugador, String lineaLista, String lineaJugador) {
+
+        // Contar cada letra que se equivo
+        int i = 0;
+        int contError = 0;
+        while (i < lineaLista.length()) {
+            // Como compara caracter por caracter
+            if (lineaLista.charAt(i) != lineaJugador.charAt(i)) {
+                contError++;
+                jugador.cantidadFallos = contError;
+            }
+            i++;
+        }
     }
-    
+
 //    public void insertarArchivo(int op) {
 //        File archivo;
 //        if (op == 1) {
@@ -292,6 +298,4 @@ public class GestorProyecto {
 //        }
 //        return true;
 //    }
-
-   
 }
