@@ -93,6 +93,7 @@ public class Mensajes {
         IMPRIMIR_TECLA("2. Imprimir teclas."),
         MODIFICAR_TECLA("3. Modificar teclas."),
         ELIMINAR_TECLA("4. Eliminar teclas."),
+        IMPORTAR_SECUENCIAS_TECLAS("5. Importar Secuencia de teclas"),
         
         REGISTRAR_JUGADOR("1. Registrar jugador."),
         IMPRIMIR_JUGADOR("2. Imprimir jugador."),

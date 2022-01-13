@@ -9,13 +9,12 @@ public class Menu {
 
     private static final String EXPR_REG_MENU_PCPAL = "[0-5]";
     private static final String EXPR_REG_MENU_REGISTROS_JUGADORES = "[0-3]";
-    private static final String EXPR_REG_MENU_REGISTRO_TECLAS = "[0-3]";
+    private static final String EXPR_REG_MENU_REGISTRO_TECLAS = "[0-6]";
     private static final String EXPR_REG_MENU_CONFIGURACION = "[0-2]";
     private static final String EXPR_REG_MENU_CONFIGURACION_MODOJUEGO = "[0-3]";
     private static final String EXPR_REG_MENU_CONFIGURACION_TIEMPO = "[0-3]";
-private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
-        
-    
+    private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
+
 //    private static final String EXPR_REG_NOTA = "^[0-9]+(\\.[0-9]{1,2})?$";
     private static final String EXPR_REG_CONFIRM = "[ssnN]";
 
@@ -37,13 +36,13 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
                     registrarTeclas(gestorProyecto);
 
                     break;
+//                case 3:
+//                    insertarArchivoTxt(gestorProyecto);
+//                    break;
                 case 3:
-                    insertarArchivoTxt(gestorProyecto);
-                    break;
-                case 4:
                     configuracionJuego(gestorProyecto);
                 // Play
-                case 5:
+                case 4:
                     play();
 
             }
@@ -82,7 +81,7 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
         } while (opcion != 0);
     }
 
-    public static void registrarTeclas(GestorProyecto gestorProyecto) {
+    public static void registrarTeclas(GestorProyecto gestorProyecto) throws IOException {
         int opcion;
         do {
             Menu.imprimirMenuRegistroTeclas();
@@ -103,6 +102,9 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
                 case 4:
                     gestorProyecto.eliminarTecla();
                     break;
+                case 5:
+                    gestorProyecto.insertarArchivoTxt();
+                    break;
 
             }
         } while (opcion != 0);
@@ -114,7 +116,7 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
             Menu.imprimirMenuConfiguración();
             opcion = Integer.parseInt(Consola.ingresarDato(
                     Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
-                    new ValidadorExpReg(EXPR_REG_MENU_CONFIGURACION)));
+                    new ValidadorExpReg(EXPR_REG_MENU_REGISTRO_TECLAS)));
 
             switch (opcion) {
                 case 1:
@@ -129,27 +131,27 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
         } while (opcion != 0);
     }
 
-    public static void insertarArchivoTxt(GestorProyecto gestorProyecto) throws IOException {
-        int opcion;
-        do {
-            Menu.imprimirMenuArchivoTxt();
-            opcion = Integer.parseInt(Consola.ingresarDato(
-                    Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
-                    new ValidadorExpReg(EXPR_REG_MENU_ARCHIVO_TXT)));
-
-            switch (opcion) {
-                case 1:
-                    // Modo de guejo
-                    gestorProyecto.insertarArchivoTxt();
-                    break;
-                case 2:
-                    // Configuración tiempo 
-//                    configuracionTiempo(gestorProyecto);
-
-                    break;
-            }
-        } while (opcion != 0);
-    }
+//    public static void insertarArchivoTxt(GestorProyecto gestorProyecto) throws IOException {
+//        int opcion;
+//        do {
+//            Menu.imprimirMenuArchivoTxt();
+//            opcion = Integer.parseInt(Consola.ingresarDato(
+//                    Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
+//                    new ValidadorExpReg(EXPR_REG_MENU_ARCHIVO_TXT)));
+//
+//            switch (opcion) {
+//                case 1:
+//                    // Modo de guejo
+//                    gestorProyecto.insertarArchivoTxt();
+//                    break;
+//                case 2:
+//                    // Configuración tiempo 
+////                    configuracionTiempo(gestorProyecto);
+//
+//                    break;
+//            }
+//        } while (opcion != 0);
+//    }
 
     public static void modoJuego(GestorProyecto gestorProyecto) {
         int opcion;
@@ -192,6 +194,7 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
         System.out.println(Mensajes.MENU.IMPRIMIR_TECLA.tx());
         System.out.println(Mensajes.MENU.MODIFICAR_TECLA.tx());
         System.out.println(Mensajes.MENU.ELIMINAR_TECLA.tx());
+        System.out.println(Mensajes.MENU.IMPORTAR_SECUENCIAS_TECLAS.tx());
         System.out.println(Mensajes.MENU.REGRESAR.tx());
     }
 
@@ -221,12 +224,12 @@ private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
         System.out.println(Mensajes.MENU.REGRESAR.tx());
     }
 
-    private static void imprimirMenuArchivoTxt() {
-        System.out.println(Mensajes.MENU.ENCABEZADO_REGISTRO_ARCHIVO_TXT.tx());
-        System.out.println(Mensajes.MENU.INSERTAR_ARCHIVO.tx());
-        System.out.println(Mensajes.MENU.REGRESAR.tx());
-
-    }
+//    private static void imprimirMenuArchivoTxt() {
+//        System.out.println(Mensajes.MENU.ENCABEZADO_REGISTRO_ARCHIVO_TXT.tx());
+//        System.out.println(Mensajes.MENU.INSERTAR_ARCHIVO.tx());
+//        System.out.println(Mensajes.MENU.REGRESAR.tx());
+//
+//    }
 
     static int ingresarPos() {
 
