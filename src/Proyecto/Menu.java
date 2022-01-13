@@ -13,7 +13,9 @@ public class Menu {
     private static final String EXPR_REG_MENU_CONFIGURACION = "[0-2]";
     private static final String EXPR_REG_MENU_CONFIGURACION_MODOJUEGO = "[0-3]";
     private static final String EXPR_REG_MENU_CONFIGURACION_TIEMPO = "[0-3]";
-
+private static final String EXPR_REG_MENU_ARCHIVO_TXT = "[0-1]";
+        
+    
 //    private static final String EXPR_REG_NOTA = "^[0-9]+(\\.[0-9]{1,2})?$";
     private static final String EXPR_REG_CONFIRM = "[ssnN]";
 
@@ -36,14 +38,14 @@ public class Menu {
 
                     break;
                 case 3:
-                    configuracionJuego(gestorProyecto);
-
+                    insertarArchivoTxt(gestorProyecto);
                     break;
                 case 4:
-                    // Play
-                    gestorProyecto.juego();
-//                    System.out.println(Mensajes.ERROR.NO_TERMINADO_JUEGO.tx());
-                    break;
+                    configuracionJuego(gestorProyecto);
+                // Play
+                case 5:
+                    play();
+
             }
 
         } while (opcion != 0);
@@ -127,6 +129,28 @@ public class Menu {
         } while (opcion != 0);
     }
 
+    public static void insertarArchivoTxt(GestorProyecto gestorProyecto) throws IOException {
+        int opcion;
+        do {
+            Menu.imprimirMenuArchivoTxt();
+            opcion = Integer.parseInt(Consola.ingresarDato(
+                    Mensajes.INGRESO.OPCION.tx(), Mensajes.ERROR.OPCION.tx(),
+                    new ValidadorExpReg(EXPR_REG_MENU_ARCHIVO_TXT)));
+
+            switch (opcion) {
+                case 1:
+                    // Modo de guejo
+                    gestorProyecto.insertarArchivoTxt();
+                    break;
+                case 2:
+                    // Configuración tiempo 
+//                    configuracionTiempo(gestorProyecto);
+
+                    break;
+            }
+        } while (opcion != 0);
+    }
+
     public static void modoJuego(GestorProyecto gestorProyecto) {
         int opcion;
         do {
@@ -136,7 +160,6 @@ public class Menu {
                     new ValidadorExpReg(EXPR_REG_MENU_CONFIGURACION_MODOJUEGO)));
 
 //            gestorProyecto.insertarArchivo(opcion);
-
         } while (opcion != 0);
     }
 
@@ -198,8 +221,15 @@ public class Menu {
         System.out.println(Mensajes.MENU.REGRESAR.tx());
     }
 
+    private static void imprimirMenuArchivoTxt() {
+        System.out.println(Mensajes.MENU.ENCABEZADO_REGISTRO_ARCHIVO_TXT.tx());
+        System.out.println(Mensajes.MENU.INSERTAR_ARCHIVO.tx());
+        System.out.println(Mensajes.MENU.REGRESAR.tx());
+
+    }
+
     static int ingresarPos() {
-        
+
         return Integer.parseInt(Consola.ingresarDato(Mensajes.INGRESO.POS.tx(),
                 Mensajes.ERROR.POS_NO_VALIDA.tx(),
                 new ValidadorExpReg(ValidadorExpReg.ENTERO_SIN_SIGNO)));

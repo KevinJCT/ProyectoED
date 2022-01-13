@@ -202,6 +202,21 @@ public class GestorProyecto {
             i++;
         }
     }
+    
+    public void insertarArchivoTxt() throws FileNotFoundException, IOException {
+        File archivo = new File("Normal.txt");
+        FileReader filereader = new FileReader(archivo);
+        BufferedReader br = new BufferedReader(filereader);
+
+        String cadena;
+
+        while ((cadena = br.readLine()) != null) {
+            teclas.add(new Tecla(cadena));
+        }
+    }
+
+    
+    
 
 //    public void insertarArchivo(int op) {
 //        File archivo;

@@ -110,7 +110,10 @@ public class Mensajes {
         MODALIDAD_FACIL("1. Facil."),
          MODALIDAD_NORMAL("2. Normal."),
          MODALIDAD_DIFICIL("3. Dificil."),
-
+         
+         ENCABEZADO_REGISTRO_ARCHIVO_TXT("---------Importar secuencia de teclas----------"),
+         INSERTAR_ARCHIVO("1. Importar secuencia de teclas"),
+         
          REGRESAR("0. REGRESAR.");
 
         private String valor;
