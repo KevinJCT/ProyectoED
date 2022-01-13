@@ -175,7 +175,7 @@ public class GestorProyecto {
             System.out.println(teclas.get(i).tecla);
             linea = ingreso.nextLine();
             //Metodo para verificar y contar errores 
-            verificarIngreso(jugadores.get(i), teclas.get(i).tecla, linea);
+            verificarSecuenciaTeclas(jugadores.get(i), teclas.get(i).tecla, linea);
             i++;
         }
 
@@ -188,34 +188,31 @@ public class GestorProyecto {
         //Preguntar volver a jugar
     }
 
-    private boolean verificarIngreso(Jugador jugador, String secuenciaTecla, String lineaJugador) {
+    private boolean verificarSecuenciaTeclas(Jugador jugador, String secuenciaTecla, String lineaJugador) {
 
         // Contar cada letra que se equivo
         int i = 0;
 //        int contadorErrror = 0;
         int contadorAciertos = 0;
-//        int contadorAux = 0;
-        int cantidadSecuenciaTecla = secuenciaTecla.length();
-        int cantidadLineaJugador = lineaJugador.length();
+//        int cantidadSecuenciaTecla = secuenciaTecla.length();
+//        int cantidadLineaJugador = lineaJugador.length();
 
         while (i < secuenciaTecla.length() - 1) {
-            // Como compara caracter por caracter
             try {
-//                System.out.println(secuenciaTecla.length());
                 if (secuenciaTecla.charAt(i) == lineaJugador.charAt(i)) {
 //                    contadorErrror++;
 //                    jugador.cantidadFallos = contadorErrror;
                     contadorAciertos++;
-                    System.out.println(contadorAciertos);
+//                    System.out.println(contadorAciertos);
                     jugador.cantidadAciertos = contadorAciertos;
                 }
-
             } catch (Exception e) {
                 return false;
             }
             i++;
         }
-        
+      
+
 //        if (cantidadLineaJugador < cantidadSecuenciaTecla) {
 //            contadorAux = cantidadSecuenciaTecla - cantidadLineaJugador - 1;
 //            jugador.cantidadFallos = contadorAux + contadorErrror;
