@@ -6,10 +6,10 @@ import java.io.File;
 public class Jugador {
 
     String nickname;
-    int tiempo;
+    int tiempo; // Tiempo maximo en escribir secuencia
 //    File letras;
-    int cantidadAciertos;
-    int cantidadFallos;
+    int cantidadAciertos; // Opcional
+    int cantidadFallos; // Letra - Letra
     
 //    String id;
 

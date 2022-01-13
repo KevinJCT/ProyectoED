@@ -43,7 +43,7 @@ public class Menu {
                     configuracionJuego(gestorProyecto);
                 // Play
                 case 4:
-                    play();
+                    gestorProyecto.play();
 
             }
 
@@ -232,7 +232,6 @@ public class Menu {
 //    }
 
     static int ingresarPos() {
-
         return Integer.parseInt(Consola.ingresarDato(Mensajes.INGRESO.POS.tx(),
                 Mensajes.ERROR.POS_NO_VALIDA.tx(),
                 new ValidadorExpReg(ValidadorExpReg.ENTERO_SIN_SIGNO)));

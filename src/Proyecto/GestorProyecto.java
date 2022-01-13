@@ -67,16 +67,16 @@ public class GestorProyecto {
         return true;
     }
 
-    int validarPosicion(int posFinal) {
+    int validarPosicion(int cantidadElementos) {
         int pos;
         do {
             // Se obtiene el valor de posicion ingresada
             pos = ingresarPos();
             // posicion es mayor a la cantidad de jugadores o posicion es menor o igual a cero
-            if (pos > posFinal || pos <= 0) {
+            if (pos > cantidadElementos || pos <= 0) {
                 System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx()); // muestra el mensaje
             }
-        } while (pos > posFinal || pos <= 0);
+        } while (pos > cantidadElementos || pos <= 0);
         return pos;
     }
 
@@ -157,21 +157,20 @@ public class GestorProyecto {
     }
 
     public void insertarTiempo() {
-        String tiempo = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
+        int tiempo = Integer.valueOf(Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
                 new ValidadorExpReg(ValidadorExpReg.ENTERO_CON_SIGNO)));
 
         for (Jugador jugador : jugadores) {
-            jugador.tiempo = Integer.valueOf(tiempo);
+            jugador.tiempo = tiempo;
         }
     }
 
-    public void juego() {
-        int i = 0;
+    public void play() {
         Scanner ingreso = new Scanner(System.in);
-        String linea;
+        String linea; // Ingresar jugador
+        int i = 0;
         while (i < jugadores.size()) {
-
             System.out.println("------ " + jugadores.get(i).nickname + " ------");
             System.out.println(teclas.get(i).tecla);
             linea = ingreso.nextLine();
@@ -182,27 +181,48 @@ public class GestorProyecto {
 
         for (Jugador jugador : jugadores) {
             System.out.println("\n\n ****** Tabla ******");
-            System.out.printf("%10s%20s\n", "Jugador", "Cantidad Fallos");
-            System.out.printf("%10s%10s%10s\n", jugador.nickname, "........", jugador.cantidadFallos);
+            System.out.printf("%10s%20s\n", "Jugador", "Cantidad Aciertos");
+//            System.out.printf("%10s%10s%10s\n", jugador.nickname, "........", jugador.cantidadFallos);
+            System.out.printf("%10s%10s%10s\n", jugador.nickname, "........", jugador.cantidadAciertos);
         }
         //Preguntar volver a jugar
     }
 
-    private void verificarIngreso(Jugador jugador, String lineaLista, String lineaJugador) {
+    private boolean verificarIngreso(Jugador jugador, String secuenciaTecla, String lineaJugador) {
 
         // Contar cada letra que se equivo
         int i = 0;
-        int contError = 0;
-        while (i < lineaLista.length()) {
+//        int contadorErrror = 0;
+        int contadorAciertos = 0;
+//        int contadorAux = 0;
+        int cantidadSecuenciaTecla = secuenciaTecla.length();
+        int cantidadLineaJugador = lineaJugador.length();
+
+        while (i < secuenciaTecla.length() - 1) {
             // Como compara caracter por caracter
-            if (lineaLista.charAt(i) != lineaJugador.charAt(i)) {
-                contError++;
-                jugador.cantidadFallos = contError;
+            try {
+//                System.out.println(secuenciaTecla.length());
+                if (secuenciaTecla.charAt(i) == lineaJugador.charAt(i)) {
+//                    contadorErrror++;
+//                    jugador.cantidadFallos = contadorErrror;
+                    contadorAciertos++;
+                    System.out.println(contadorAciertos);
+                    jugador.cantidadAciertos = contadorAciertos;
+                }
+
+            } catch (Exception e) {
+                return false;
             }
             i++;
         }
+        
+//        if (cantidadLineaJugador < cantidadSecuenciaTecla) {
+//            contadorAux = cantidadSecuenciaTecla - cantidadLineaJugador - 1;
+//            jugador.cantidadFallos = contadorAux + contadorErrror;
+//        }
+        return true;
     }
-    
+
     public void insertarArchivoTxt() throws FileNotFoundException, IOException {
         File archivo = new File("Normal.txt");
         FileReader filereader = new FileReader(archivo);
@@ -214,9 +234,6 @@ public class GestorProyecto {
             teclas.add(new Tecla(cadena));
         }
     }
-
-    
-    
 
 //    public void insertarArchivo(int op) {
 //        File archivo;
