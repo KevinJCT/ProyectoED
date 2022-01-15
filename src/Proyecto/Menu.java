@@ -46,7 +46,7 @@ public class Menu {
                     gestorProyecto.play();
 
             }
-
+            System.out.println(Mensajes.ERROR.OPCION.tx());
         } while (opcion != 0);
 
     }
@@ -94,17 +94,20 @@ public class Menu {
                     gestorProyecto.insertarTecla();
                     break;
                 case 2:
-                    gestorProyecto.imprimirTeclas();
-                    break;
-                case 3:
+//                    gestorProyecto.imprimirTeclas();
                     gestorProyecto.modificarTecla();
                     break;
-                case 4:
+                case 3:
+//                    gestorProyecto.modificarTecla();
                     gestorProyecto.eliminarTecla();
                     break;
-                case 5:
+                case 4:
+//                    gestorProyecto.eliminarTecla();
                     gestorProyecto.insertarArchivoTxt();
                     break;
+//                case 5:
+////                    gestorProyecto.insertarArchivoTxt();
+//                    break;
 
             }
         } while (opcion != 0);
@@ -129,6 +132,7 @@ public class Menu {
                     break;
             }
         } while (opcion != 0);
+
     }
 
 //    public static void insertarArchivoTxt(GestorProyecto gestorProyecto) throws IOException {
@@ -152,7 +156,6 @@ public class Menu {
 //            }
 //        } while (opcion != 0);
 //    }
-
     public static void modoJuego(GestorProyecto gestorProyecto) {
         int opcion;
         do {
@@ -163,6 +166,7 @@ public class Menu {
 
 //            gestorProyecto.insertarArchivo(opcion);
         } while (opcion != 0);
+
     }
 
     public static void configuracionTiempo(GestorProyecto gestorProyecto) {
@@ -191,7 +195,7 @@ public class Menu {
     private static void imprimirMenuRegistroTeclas() {
         System.out.println(Mensajes.MENU.ENCABEZADO_REGISTRO_TECLAS.tx());
         System.out.println(Mensajes.MENU.INGRESAR_TECLA.tx());
-        System.out.println(Mensajes.MENU.IMPRIMIR_TECLA.tx());
+//        System.out.println(Mensajes.MENU.IMPRIMIR_TECLA.tx());
         System.out.println(Mensajes.MENU.MODIFICAR_TECLA.tx());
         System.out.println(Mensajes.MENU.ELIMINAR_TECLA.tx());
         System.out.println(Mensajes.MENU.IMPORTAR_SECUENCIAS_TECLAS.tx());
@@ -230,7 +234,6 @@ public class Menu {
 //        System.out.println(Mensajes.MENU.REGRESAR.tx());
 //
 //    }
-
     static int ingresarPos() {
         return Integer.parseInt(Consola.ingresarDato(Mensajes.INGRESO.POS.tx(),
                 Mensajes.ERROR.POS_NO_VALIDA.tx(),

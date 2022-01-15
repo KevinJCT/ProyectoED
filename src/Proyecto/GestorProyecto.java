@@ -100,7 +100,7 @@ public class GestorProyecto {
         return true;
     }
 
-    public void insertarTecla() {
+    public void insertarTecla() throws IOException {
 
         String tecla = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TECLA.tx(),
                 Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
@@ -111,9 +111,11 @@ public class GestorProyecto {
         } else {
             System.out.println(Mensajes.NOTIF.TECLA.tx());
         }
+        imprimirTeclas();
+
     }
 
-    public boolean imprimirTeclas() {
+    public boolean imprimirTeclas() throws IOException {
         if (this.teclas.isEmpty()) {
             System.out.println(Mensajes.ERROR.NO_EXISTE_TECLA.tx());
             return false;
@@ -124,7 +126,7 @@ public class GestorProyecto {
         return true;
     }
 
-    public boolean eliminarTecla() {
+    public boolean eliminarTecla() throws IOException {
         if (this.teclas.isEmpty()) {
             System.out.println(Mensajes.ERROR.NO_EXISTE_TECLA.tx());
             return false;
@@ -138,7 +140,7 @@ public class GestorProyecto {
         return true;
     }
 
-    public boolean modificarTecla() {
+    public boolean modificarTecla() throws IOException {
         if (this.teclas.isEmpty()) {
             System.out.println(Mensajes.ERROR.NO_EXISTE_TECLA.tx());
             return false;
@@ -158,7 +160,7 @@ public class GestorProyecto {
 
     public void insertarTiempo() {
         int tiempo = Integer.valueOf(Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
-                Mensajes.ERROR.NO_EXISTE_TECLA.tx(),
+                Mensajes.ERROR.NO_EXISTE_TIEMPO.tx(),
                 new ValidadorExpReg(ValidadorExpReg.ENTERO_CON_SIGNO)));
 
         for (Jugador jugador : jugadores) {
@@ -211,7 +213,6 @@ public class GestorProyecto {
             }
             i++;
         }
-      
 
 //        if (cantidadLineaJugador < cantidadSecuenciaTecla) {
 //            contadorAux = cantidadSecuenciaTecla - cantidadLineaJugador - 1;
@@ -224,12 +225,11 @@ public class GestorProyecto {
         File archivo = new File("Normal.txt");
         FileReader filereader = new FileReader(archivo);
         BufferedReader br = new BufferedReader(filereader);
-
         String cadena;
-
         while ((cadena = br.readLine()) != null) {
             teclas.add(new Tecla(cadena));
         }
+        this.imprimirTeclas();
     }
 
 //    public void insertarArchivo(int op) {
