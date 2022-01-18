@@ -168,6 +168,77 @@ public class GestorProyecto {
         }
     }
 
+    private boolean controlOpcionPlay() {
+        if (this.jugadores.isEmpty() && this.teclas.isEmpty()) {
+            System.out.println(Mensajes.ERROR.NO_EXISTE_PARAMETROS.tx());
+            return false;
+        } else if (this.jugadores.isEmpty()) {
+            System.out.println(Mensajes.ERROR.NO_VALIDO_JUGADOR.tx());
+            return false;
+        } else if (this.teclas.isEmpty()) {
+            System.out.println(Mensajes.ERROR.NO_EXISTE_TECLA.tx());
+            return false;
+        }
+        return true;
+    }
+
+    public boolean play() {
+        if (!this.controlOpcionPlay()) {
+            return false;
+        }
+        Runnable r = new Temporizador(30);
+        boolean termino = false;
+        int cont = 0;
+        Scanner tecla = new Scanner(System.in);
+        String lineaJugador;
+        boolean verificarSecuencia;
+        int i = 0;
+        // Jugadores juega cada vez que eltiempo acabe
+        for (Jugador jugador : jugadores) {
+            //Se crea el hilo de cuenta regresiva
+            Thread t = new Thread(r);
+            //Se empieza el hijo
+            t.start();
+            System.out.println("------ " + jugador.nickname + " ------");
+            do {
+                System.out.println("\033[34m" + teclas.get(i).tecla);
+                lineaJugador = tecla.nextLine();
+                verificarSecuencia = this.verificarSecuencia(jugador, teclas.get(i).tecla, lineaJugador);
+                termino = t.isAlive();
+                i++;
+            } while (termino == true);
+            System.out.println("\033[31m Tu tiempo se ha acabado");
+        }
+        return true;
+    }
+
+    private boolean verificarSecuencia(Jugador jugador, String secuenciaTecla, String lineaJugador) {
+        int i = 0;
+        int contadorAciertos = 0;
+        boolean verificador = false;
+//        System.out.println("Si entro");
+        while (i < secuenciaTecla.length()) {
+//            System.out.println("Entro en bucle");
+            try {
+//                System.out.print(secuenciaTecla.charAt(i));
+                if (secuenciaTecla.charAt(i) == lineaJugador.charAt(i)) {
+                    System.out.print("\033[32m" + secuenciaTecla.charAt(i));
+                    contadorAciertos++;
+                    verificador = false;
+                } else {
+                    System.out.print("\033[31m" + secuenciaTecla.charAt(i));
+                }
+            } catch (Exception e) {
+                return false;
+            }
+            i++;
+        }
+        System.out.println("");
+        jugador.cantidadAciertos += contadorAciertos;
+        return verificador;
+    }
+
+    /*
     public void play() {
         Scanner ingreso = new Scanner(System.in);
         String linea; // Ingresar jugador
@@ -220,7 +291,7 @@ public class GestorProyecto {
 //        }
         return true;
     }
-
+     */
     public void insertarArchivoTxt() throws FileNotFoundException, IOException {
         File archivo = new File("Normal.txt");
         FileReader filereader = new FileReader(archivo);
@@ -232,99 +303,4 @@ public class GestorProyecto {
         this.imprimirTeclas();
     }
 
-//    public void insertarArchivo(int op) {
-//        File archivo;
-//        if (op == 1) {
-//            for (Jugador jugador : jugadores) {
-//                try {
-//                    jugador.letras = new File("Facil.txt");
-//                } catch (Exception e) {
-//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
-//                }
-//            }
-//        } else if (op == 2) {
-//            for (Jugador jugador : jugadores) {
-//                try {
-//                    jugador.letras = new File("Normal.txt");
-//                } catch (Exception e) {
-//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
-//                }
-//            }
-//        } else if (op == 3) {
-//            for (Jugador jugador : jugadores) {
-//                try {
-//                    jugador.letras = new File("Dificil.txt");
-//                } catch (Exception e) {
-//                    Mensajes.ERROR.ARCHIVO_NO_ENCONTRADO.tx();
-//                }
-//            }
-//        }
-//    }
-//    public void jugar() throws FileNotFoundException, IOException {
-//
-//        for (Jugador jugador : jugadores) {
-//            
-//            System.out.println("Jugador "+jugador.nickname+jugador.tiempo);
-//            FileReader filereader = new FileReader(jugador.letras);
-//            BufferedReader br = new BufferedReader(filereader);
-//            String cadena;
-//
-//            while ((cadena = br.readLine()) != null) {
-//                System.out.println(cadena);
-//            }
-//
-//            System.out.println("");
-//        }
-//    }
-//
-//    public boolean modificarTiempo() {
-//        if (this.tiempos.isEmpty()) {
-//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-//            return false;
-//        }
-//        imprimirTiempo(); // Aqui tambien
-//        int pos;
-//        do {
-//            pos = ingresarPos();
-//            if (pos > this.tiempos.size() || pos <= 0) {
-//                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-//            }
-//        } while (pos > this.tiempos.size() || pos <= 0);
-//        String tiempo = (Consola.ingresarDato(Mensajes.INGRESO.INTRODUCIR_TIEMPO.tx(),
-//                Mensajes.ERROR.NO_EXISTE_TIEMPO.tx(),
-//                new ValidadorExpReg(ValidadorExpReg.ENTERO_SIN_SIGNO)));
-//
-//        this.tiempos.get(pos - 1).tiempo = tiempo;
-//        System.out.println(Mensajes.NOTIF.MODIFICAR_TIEMPO.tx());
-//        return true;
-//    }
-//
-//    public boolean eliminarTiempo() {
-//        if (this.tiempos.isEmpty()) {
-//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-//            return false;
-//        }
-//        imprimirTiempo();
-//        int pos;
-//        do {
-//            pos = ingresarPos();
-//            if (pos > this.tiempos.size() || pos <= 0) {
-//                System.out.println(Mensajes.ERROR.POS_NO_VALIDA.tx());
-//            }
-//        } while (pos > this.tiempos.size() || pos <= 0);
-//        this.tiempos.remove(pos - 1);
-//        System.out.println(Mensajes.NOTIF.ELIMINAR_TIEMPO.tx());
-//        return true;
-//    }
-//
-//    public boolean imprimirTiempo() {
-//        if (this.tiempos.isEmpty()) {
-//            System.out.println(Mensajes.ERROR.NO_EXISTE_TIEMPO.tx());
-//            return false;
-//        }
-//        for (int i = 0; i < this.tiempos.size(); i++) {
-//            System.out.printf("%10d%s%s\n", i + 1, ".", this.tiempos.get(i).tiempo);
-//        }
-//        return true;
-//    }
 }

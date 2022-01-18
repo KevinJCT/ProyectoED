@@ -32,6 +32,7 @@ public class Mensajes {
     public enum ERROR {
 //        OPCION(ANSI_RED + "Número de opción no válida." + ANSI_RED),
         OPCION(ANSI_RED + "Número de opción no válida." + ANSI_RED),
+        NO_EXISTE_PARAMETROS(ANSI_RED+"ERROR: Llenar parametros..."),
         NO_VALIDO_JUGADOR(ANSI_RED + "Nombre del jugador no válido: " + ANSI_RED),
         NO_JUGADOR(ANSI_RED + "No existen jugadores" + ANSI_RED),
         //CEDULA("El número de cédula especificado no es válido."),
